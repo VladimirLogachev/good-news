@@ -8,5 +8,13 @@ export const App = () => (
       <span className="app-name">Good News</span>
       <span className="author">by Vladimir Logachev</span>
     </div>
+    <div className="credits">
+      <span className="author">
+        Powered by{' '}
+        <a className="attribution-link" href="https://newsapi.org" target="_blank">
+          News API
+        </a>
+      </span>
+    </div>
   </div>
 );

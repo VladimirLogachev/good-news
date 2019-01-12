@@ -20,6 +20,14 @@
 
 .credits {
   padding-top: 2em;
+}
+
+.credits + .credits {
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+}
+
+.credits:last-child {
   padding-bottom: 1em;
 }
 
@@ -36,4 +44,9 @@
 .author {
   color: rgb(133, 133, 133);
   font-size: 0.8em;
+}
+
+.attribution-link {
+  color: rgb(29, 145, 223);
+  text-decoration: none;
 }
