@@ -26,7 +26,8 @@ class FeedComponent extends React.Component<State> {
     const fetchBtn = <button onClick={e => fetchMoreNews()}>fetchMoreNews</button>;
     return (
       <div>
-        {isLoading ? loader : articlesList}
+        {articlesList.length !== 0 && articlesList}
+        {isLoading && loader}
         {error.length !== 0 && `Sorry, ${error}`}
         {isLoading || fetchBtn}
       </div>
