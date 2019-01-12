@@ -4,7 +4,9 @@
   "description": "Good News",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --open --history-api-fallback"
+    "start": "webpack-dev-server --open --history-api-fallback",
+    "build": "webpack --config=webpack.build.config.js",
+    "publish": "webpack --config=webpack.publish.config.js"
   },
   "repository": {
     "type": "git",
