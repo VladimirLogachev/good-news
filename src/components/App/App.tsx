@@ -1,9 +1,16 @@
 import * as React from 'react';
+import { Route, Switch } from 'react-router-dom';
+import { Favorites } from '../Favorites/Favorites';
+import { Feed } from '../Feed/Feed';
 import './App.css';
 
 export const App = () => (
   <div className="app">
     <h1 className="title">Good News</h1>
+    <Switch>
+      <Route exact path="/favorites" component={Favorites} />
+      <Route component={Feed} />
+    </Switch>
     <div className="credits">
       <span className="app-name">Good News</span>
       <span className="author">by Vladimir Logachev</span>
