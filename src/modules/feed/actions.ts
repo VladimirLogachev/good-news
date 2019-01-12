@@ -1,3 +1,5 @@
+import { ArticleItem } from './types';
+
 export const types = {
   FETCH_MORE_NEWS: 'FETCH_MORE_NEWS',
   SAVE_NEWS: 'SAVE_NEWS',
@@ -8,9 +10,10 @@ const fetchMoreNews = () => ({
   type: types.FETCH_MORE_NEWS
 });
 
-const saveNews = (items: any[]) => ({
+const saveNews = (articles: ArticleItem[], articlesAvailable: number) => ({
   type: types.SAVE_NEWS,
-  items
+  articles,
+  articlesAvailable
 });
 
 const fetchFail = errorText => ({

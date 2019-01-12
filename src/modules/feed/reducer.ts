@@ -1,14 +1,17 @@
 import { allTypes } from '../actions';
+import { ArticleItem } from './types';
 
 export type State = {
   isLoading: boolean;
-  items: any[];
+  articles: ArticleItem[];
+  articlesAvailable: number;
   error: string;
 };
 
 const initialState: State = {
   isLoading: false,
-  items: [],
+  articles: [],
+  articlesAvailable: Infinity,
   error: ''
 };
 
@@ -18,10 +21,11 @@ const fetchMoreNews = (state: State) => ({
   error: ''
 });
 
-const saveNews = (state: State, { items }) => ({
+const saveNews = (state: State, { articles, articlesAvailable }) => ({
   ...state,
   isLoading: false,
-  items: state.items.concat(items),
+  articles: state.articles.concat(articles),
+  articlesAvailable,
   error: ''
 });
 

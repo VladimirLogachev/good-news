@@ -1,29 +1,34 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import './Feed.css';
 import { allActions } from '../../modules/actions';
+import { ReduxState } from '../../modules/reducers';
+import { Article } from '../Article/Article';
+import './Feed.css';
 
-class FeedComponent extends React.Component<any, any> {
+type State = {
+  fetchMoreNews: Function;
+  feed: ReduxState['feed'];
+};
+
+class FeedComponent extends React.Component<State> {
   componentWillMount() {
-    const { fetchMoreNews } = this.props;
-    fetchMoreNews();
+    this.props.fetchMoreNews();
   }
 
   render() {
     const {
-      feed: { isLoading, items, error },
-      fetchMoreNews,
-      saveNews
+      feed: { isLoading, articles, error },
+      fetchMoreNews
     } = this.props;
     const loader = <span>Loading more good news...</span>;
-    const itemsList = items.map(JSON.stringify);
+    const articlesList = articles.map(x => <Article key={x.url} {...x} />);
+    const fetchBtn = <button onClick={e => fetchMoreNews()}>fetchMoreNews</button>;
     return (
       <div>
-        {isLoading ? loader : itemsList}
-        {error.length && `Sorry, ${error}`}
-        <a onClick={() => fetchMoreNews()}>fetchMoreNews</a>
-        <a onClick={() => saveNews()}>saveNews</a>
+        {isLoading ? loader : articlesList}
+        {error.length !== 0 && `Sorry, ${error}`}
+        {isLoading || fetchBtn}
       </div>
     );
   }
