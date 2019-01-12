@@ -4,13 +4,30 @@ import { bindActionCreators } from 'redux';
 import './Feed.css';
 import { allActions } from '../../modules/actions';
 
-const FeedComponent = ({ feed, fetchMoreNews, saveNews }) => (
-  <div>
-    {JSON.stringify(feed)}
-    <a onClick={() => fetchMoreNews()}>fetchMoreNews</a>
-    <a onClick={() => saveNews()}>saveNews</a>
-  </div>
-);
+class FeedComponent extends React.Component<any, any> {
+  componentWillMount() {
+    const { fetchMoreNews } = this.props;
+    fetchMoreNews();
+  }
+
+  render() {
+    const {
+      feed: { isLoading, items, error },
+      fetchMoreNews,
+      saveNews
+    } = this.props;
+    const loader = <span>Loading more good news...</span>;
+    const itemsList = items.map(JSON.stringify);
+    return (
+      <div>
+        {isLoading ? loader : itemsList}
+        {error.length && `Sorry, ${error}`}
+        <a onClick={() => fetchMoreNews()}>fetchMoreNews</a>
+        <a onClick={() => saveNews()}>saveNews</a>
+      </div>
+    );
+  }
+}
 
 const mapStateToProps = ({ feed }) => ({ feed });
 
