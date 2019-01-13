@@ -2,26 +2,22 @@ import * as React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { createStore, applyMiddleware } from 'redux';
+import { PersistGate } from 'redux-persist/es/integration/react';
 import { App } from './components/App/App';
-import { reducers } from './modules/reducers';
-import { sagas } from './modules/sagas';
+import { configureStore } from './modules/store';
 
-import createSagaMiddleware from 'redux-saga';
-
-const sagaMiddleware = createSagaMiddleware();
-const enhancer = applyMiddleware(sagaMiddleware);
-const store = createStore(reducers, enhancer);
-sagaMiddleware.run(sagas);
+const { store, persistor } = configureStore();
 
 const rootElement = document.createElement('div');
 document.body.appendChild(rootElement);
 
 render(
   <Provider store={store}>
-    <Router>
-      <App />
-    </Router>
+    <PersistGate persistor={persistor}>
+      <Router>
+        <App />
+      </Router>
+    </PersistGate>
   </Provider>,
   rootElement
 );

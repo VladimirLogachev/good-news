@@ -21,7 +21,7 @@ An infinite news feed, build with **TypeScript, React, Redux, Saga, Axios**
 - Cover with tests _(TODO)_;
 - Use static types with TypeScript/Flow;
 - Changes in API data should not lead to crashes (all external datasets should be validated);
-- User should be able to see saved articles after reloading a page _(TODO)_.
+- User should be able to see saved articles after reloading a page.
 
 ## How to use
 
