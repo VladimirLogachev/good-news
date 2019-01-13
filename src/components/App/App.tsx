@@ -2,11 +2,13 @@ import * as React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { Favorites } from '../Favorites/Favorites';
 import { Feed } from '../Feed/Feed';
+import { Menu } from '../Menu/Menu';
 import './App.css';
 
 export const App = () => (
   <div className="app">
     <h1 className="title">Good News</h1>
+    <Menu />
     <Switch>
       <Route exact path="/favorites" component={Favorites} />
       <Route component={Feed} />

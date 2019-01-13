@@ -1,5 +1,7 @@
 type Miliseconds = number;
 
+export type ArticleKey = string;
+
 export type ArticleItem = {
   url: string;
   imageUrl: string;
@@ -7,6 +9,7 @@ export type ArticleItem = {
   text: string;
   sourceName: string;
   publishedAt: Miliseconds;
+  key: ArticleKey; // could be a hash, but for now it's just url
 };
 
 export type ApiArticlesDataset = {

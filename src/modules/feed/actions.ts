@@ -3,7 +3,9 @@ import { ArticleItem } from './types';
 export const types = {
   FETCH_MORE_NEWS: 'FETCH_MORE_NEWS',
   SAVE_NEWS: 'SAVE_NEWS',
-  FETCH_FAIL: 'FETCH_FAIL'
+  FETCH_FAIL: 'FETCH_FAIL',
+  SAVE_ARTICLE: 'SAVE_ARTICLE',
+  FORGET_ARTICLE: 'FORGET_ARTICLE'
 };
 
 const fetchMoreNews = () => ({
@@ -21,8 +23,20 @@ const fetchFail = errorText => ({
   errorText
 });
 
+const saveArticle = articleKey => ({
+  type: types.SAVE_ARTICLE,
+  articleKey
+});
+
+const forgetArticle = articleKey => ({
+  type: types.FORGET_ARTICLE,
+  articleKey
+});
+
 export const actions = {
   fetchMoreNews,
   saveNews,
-  fetchFail
+  fetchFail,
+  saveArticle,
+  forgetArticle
 };

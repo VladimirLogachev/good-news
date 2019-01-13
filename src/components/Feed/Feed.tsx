@@ -7,23 +7,37 @@ import { Article } from '../Article/Article';
 import * as InfiniteScroll from 'react-infinite-scroller';
 import './Feed.css';
 
-type State = {
-  fetchMoreNews: Function;
+type Props = {
+  fetchMoreNews: () => void;
+  saveArticle: (string) => void;
+  forgetArticle: (string) => void;
   feed: ReduxState['feed'];
 };
 
-class FeedComponent extends React.Component<State> {
+class FeedComponent extends React.Component<Props> {
   componentWillMount() {
     this.props.fetchMoreNews();
   }
 
   render() {
     const {
-      feed: { articles, error, hasMore },
-      fetchMoreNews
+      feed: { articles, articlesByTimestamp, error, hasMore, savedArticles },
+      fetchMoreNews,
+      saveArticle,
+      forgetArticle
     } = this.props;
     const loader = <span>Loading good news...</span>;
-    const articlesList = articles.map(x => <Article key={x.url + x.publishedAt} {...x} />);
+    const articlesList = articlesByTimestamp
+      .map(x => articles[x])
+      .map(x => (
+        <Article
+          key={x.key}
+          article={x}
+          isSaved={savedArticles.hasOwnProperty(x.key)}
+          onSave={saveArticle}
+          onForget={forgetArticle}
+        />
+      ));
     return (
       <div>
         <InfiniteScroll
@@ -43,8 +57,8 @@ class FeedComponent extends React.Component<State> {
 const mapStateToProps = ({ feed }) => ({ feed });
 
 const mapDispatchToProps = dispatch => {
-  const { fetchMoreNews, saveNews } = allActions;
-  return bindActionCreators({ fetchMoreNews, saveNews }, dispatch);
+  const { fetchMoreNews, saveArticle, forgetArticle } = allActions;
+  return bindActionCreators({ fetchMoreNews, saveArticle, forgetArticle }, dispatch);
 };
 
 export const Feed = connect(
