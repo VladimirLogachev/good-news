@@ -1,43 +1,28 @@
-import axios from 'axios';
-import { call, put, select, takeLatest } from 'redux-saga/effects';
+import axios, { AxiosResponse } from 'axios';
+import { call, put, select } from 'redux-saga/effects';
+import { env } from '../../environments/production';
+import { parseError, takeFirst } from '../../utils/saga-utils';
 import { allActions, allTypes } from '../actions';
 import { ReduxState } from '../reducers';
-import { DateTime } from 'luxon';
-
-const parseError = error => {
-  if (error.response) {
-    return error.response.data.message;
-  } else if (error.request) {
-    return 'There are network issues';
-  }
-  return error.message;
-};
-
-const apiKey = '5220b894cc974ddd9105b4f810a15728'; // store as env variable
+import { ARTICLES_PER_PAGE } from './constants';
+import { isValidDataset, transformArticle } from './functions';
+import { ApiArticlesDataset } from './types';
 
 function* fetchMoreNews() {
   try {
-    const { articles, articlesAvailable } = yield select((x: ReduxState) => x.feed);
-    const loadedPages = Math.floor(articles.length / 20);
-    const totalPages = Math.ceil(articlesAvailable / 20);
-    if (loadedPages < totalPages) {
+    const { articles, hasMore } = yield select((x: ReduxState) => x.feed);
+    if (hasMore) {
+      const loadedPages = Math.floor(articles.length / ARTICLES_PER_PAGE);
       const targetPage = loadedPages + 1;
-      const res = yield call(
+      const res: AxiosResponse<ApiArticlesDataset> = yield call(
         axios.get,
-        `https://newsapi.org/v2/everything?sources=wired&language=en&page=${targetPage}&apiKey=${apiKey}`
+        `${env.apiUrl}everything?sources=${env.sourceName}&language=en&page=${targetPage}&apiKey=${
+          env.apiKey
+        }`
       );
-
-      // validate
+      if (!isValidDataset(res.data)) throw new Error('Api responded with an invalid dataset');
       const articlesAvailable = res.data.totalResults;
-      const items = res.data.articles.map(x => ({
-        url: x.url,
-        imageUrl: x.urlToImage,
-        title: x.title,
-        text: x.description,
-        sourceName: x.source.name,
-        publishedAt: DateTime.fromISO(x.publishedAt).toMillis()
-      }));
-      if (items.length == 0) throw new Error('there are too few articles');
+      const items = res.data.articles.map(transformArticle);
       yield put(allActions.saveNews(items, articlesAvailable));
     }
   } catch (e) {
@@ -45,4 +30,4 @@ function* fetchMoreNews() {
   }
 }
 
-export const saga = [takeLatest(allTypes.FETCH_MORE_NEWS, fetchMoreNews)];
+export const saga = [takeFirst(allTypes.FETCH_MORE_NEWS, fetchMoreNews)];

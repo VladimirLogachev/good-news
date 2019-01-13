@@ -1,37 +1,41 @@
 import { allTypes } from '../actions';
 import { ArticleItem } from './types';
+import { ARTICLES_PER_PAGE } from './constants';
 
 export type State = {
-  isLoading: boolean;
   articles: ArticleItem[];
   articlesAvailable: number;
   error: string;
+  hasMore: boolean;
 };
 
 const initialState: State = {
-  isLoading: false,
   articles: [],
   articlesAvailable: Infinity,
-  error: ''
+  error: '',
+  hasMore: true
 };
 
 const fetchMoreNews = (state: State) => ({
   ...state,
-  isLoading: true,
   error: ''
 });
 
-const saveNews = (state: State, { articles, articlesAvailable }) => ({
-  ...state,
-  isLoading: false,
-  articles: state.articles.concat(articles),
-  articlesAvailable,
-  error: ''
-});
+const saveNews = (state: State, { articles, articlesAvailable }) => {
+  const loadedPages = Math.floor(state.articles.length / ARTICLES_PER_PAGE);
+  const totalPages = Math.ceil(articlesAvailable / ARTICLES_PER_PAGE);
+  const hasMore = loadedPages < totalPages;
+  return {
+    ...state,
+    articles: state.articles.concat(articles),
+    articlesAvailable,
+    error: '',
+    hasMore
+  };
+};
 
 const fetchFail = (state: State, { errorText }) => ({
   ...state,
-  isLoading: false,
   error: errorText
 });
 

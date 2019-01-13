@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import { allActions } from '../../modules/actions';
 import { ReduxState } from '../../modules/reducers';
 import { Article } from '../Article/Article';
+import * as InfiniteScroll from 'react-infinite-scroller';
 import './Feed.css';
 
 type State = {
@@ -18,18 +19,22 @@ class FeedComponent extends React.Component<State> {
 
   render() {
     const {
-      feed: { isLoading, articles, error },
+      feed: { articles, error, hasMore },
       fetchMoreNews
     } = this.props;
-    const loader = <span>Loading more good news...</span>;
-    const articlesList = articles.map(x => <Article key={x.url} {...x} />);
-    const fetchBtn = <button onClick={e => fetchMoreNews()}>fetchMoreNews</button>;
+    const loader = <span>Loading good news...</span>;
+    const articlesList = articles.map(x => <Article key={x.url + x.publishedAt} {...x} />);
     return (
       <div>
-        {articlesList.length !== 0 && articlesList}
-        {isLoading && loader}
+        <InfiniteScroll
+          loadMore={() => fetchMoreNews()}
+          initialLoad={false}
+          hasMore={hasMore}
+          loader={loader}
+        >
+          {articlesList}
+        </InfiniteScroll>
         {error.length !== 0 && `Sorry, ${error}`}
-        {isLoading || fetchBtn}
       </div>
     );
   }

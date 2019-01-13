@@ -8,3 +8,16 @@ export type ArticleItem = {
   sourceName: string;
   publishedAt: Miliseconds;
 };
+
+export type ApiArticlesDataset = {
+  totalResults: number;
+  articles: {
+    url: string;
+    urlToImage: string;
+    title: string;
+    description: string;
+    source: { name: string };
+    publishedAt: string;
+  }[];
+  // and some more fields
+};
