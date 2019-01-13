@@ -1,6 +1,7 @@
 import axios, { AxiosResponse } from 'axios';
 import { call, put, select } from 'redux-saga/effects';
 import { env } from '../../environments/production';
+import { keys } from '../../utils/functional';
 import { parseError, takeFirst } from '../../utils/saga-utils';
 import { allActions, allTypes } from '../actions';
 import { ReduxState } from '../reducers';
@@ -12,7 +13,7 @@ function* fetchMoreNews() {
   try {
     const { articles, hasMore } = yield select((x: ReduxState) => x.feed);
     if (hasMore) {
-      const loadedPages = Math.floor(articles.length / ARTICLES_PER_PAGE);
+      const loadedPages = Math.floor(keys(articles).length / ARTICLES_PER_PAGE);
       const targetPage = loadedPages + 1;
       const res: AxiosResponse<ApiArticlesDataset> = yield call(
         axios.get,

@@ -89,3 +89,18 @@ export const reducer = (state: State = initialState, action): State => {
       return state;
   }
 };
+
+export const cleanupOnSave = feedState => ({
+  ...feedState,
+  articles: {},
+  articlesAvailable: 0,
+  articlesByTimestamp: []
+});
+
+export const cleanupOnLoad = feedState => ({
+  ...feedState,
+  articles: {},
+  articlesAvailable: Infinity,
+  articlesByTimestamp: [],
+  hasMore: true
+});

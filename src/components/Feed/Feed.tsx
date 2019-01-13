@@ -27,6 +27,7 @@ class FeedComponent extends React.Component<Props> {
       forgetArticle
     } = this.props;
     const loader = <span>Loading good news...</span>;
+    const feedEnd = <h3>The End</h3>;
     const articlesList = articlesByTimestamp
       .map(x => articles[x])
       .map(x => (
@@ -49,6 +50,7 @@ class FeedComponent extends React.Component<Props> {
           {articlesList}
         </InfiniteScroll>
         {error.length !== 0 && `Sorry, ${error}`}
+        {hasMore || feedEnd}
       </div>
     );
   }

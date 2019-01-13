@@ -40,5 +40,5 @@ export const transformArticle = x => ({
  */
 export const getKeysSortedByTimestamp = (xs: Dictionary<ArticleItem>): string[] =>
   values(xs)
-    .sort((a, b) => a.publishedAt - b.publishedAt)
+    .sort((a, b) => b.publishedAt - a.publishedAt)
     .map(x => x.key);

@@ -3,6 +3,7 @@ import { createTransform, persistCombineReducers, PersistedState, persistStore }
 import persistStorage from 'redux-persist/es/storage';
 import createSagaMiddleware from 'redux-saga';
 import { env } from '../environments/production';
+import { cleanupOnLoad, cleanupOnSave } from './feed/reducer';
 import { reducers } from './reducers';
 import { sagas } from './sagas';
 
@@ -12,14 +13,8 @@ export const configureStore = () => {
   const migration = (state: PersistedState, ver: number) => Promise.resolve(APP_VER !== ver ? {} : state);
 
   const CleanupDatasets = createTransform(
-    (inboundState: any) => ({
-      ...inboundState,
-      feed: { ...inboundState.feed, articles: {}, articlesAvailable: 0, articlesByTimestamp: [] }
-    }),
-    outboundState => ({
-      ...outboundState,
-      feed: { ...outboundState.feed, articles: {}, articlesAvailable: Infinity, articlesByTimestamp: [] }
-    })
+    (inboundState: any, key: string) => (key === 'feed' ? cleanupOnSave(inboundState) : inboundState),
+    (outboundState: any, key: string) => (key === 'feed' ? cleanupOnLoad(outboundState) : outboundState)
   );
 
   const persistConfig = {
