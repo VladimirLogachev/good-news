@@ -1,10 +1,14 @@
 import * as React from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import './Menu.css';
 
 export const Menu = () => (
-  <div>
-    <Link to="/">Feed</Link>
-    <Link to="/favorites">Favorites</Link>
+  <div className="menu">
+    <NavLink className="link" activeClassName="active" to="/feed">
+      Feed
+    </NavLink>
+    <NavLink className="link" activeClassName="active" to="/favorites">
+      Favorites
+    </NavLink>
   </div>
 );

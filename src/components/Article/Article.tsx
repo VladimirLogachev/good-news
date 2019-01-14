@@ -16,21 +16,29 @@ export const Article = ({
   onSave,
   onForget
 }: Props) => {
-  const saveBtn = <button onClick={() => onSave(key)}>save</button>;
-  const forgetBtn = <button onClick={() => onForget(key)}>forget</button>;
+  const saveBtn = (
+    <button className="btn btn-ok" onClick={() => onSave(key)}>
+      Save
+    </button>
+  );
+  const forgetBtn = (
+    <button className="btn btn-neutral" onClick={() => onForget(key)}>
+      Forget
+    </button>
+  );
   return (
-    <div>
-      <a href={url} target="_blank">
-        <h3>{title}</h3>
-      </a>
-      <p>
-        {sourceName}, {DateTime.fromMillis(publishedAt).toFormat('dd.LL.yyyy')}{' '}
-        {isSaved ? forgetBtn : saveBtn}
-      </p>
+    <div className="article">
       <a href={url} target="_blank">
         <img src={imageUrl} className="article-img" />
+        <h3 className="article-title">{title}</h3>
+        <p className="article-text">{text}</p>
       </a>
-      <p>{text}</p>
+      <div>
+        <span className="article-meta">
+          {sourceName}, {DateTime.fromMillis(publishedAt).toFormat('dd.LL.yyyy')}
+        </span>
+        {isSaved ? forgetBtn : saveBtn}
+      </div>
     </div>
   );
 };

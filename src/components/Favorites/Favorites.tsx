@@ -32,7 +32,10 @@ const FavoritesComponent = ({
     ));
   const noArticles = (
     <div>
-      You don't have saved articles yet. <Link to="/">Pick some</Link>
+      <p>You don't have saved articles yet.</p>
+      <Link className="btn" to="/">
+        Pick some
+      </Link>
     </div>
   );
   return <div>{articlesList.length !== 0 ? articlesList : noArticles}</div>;

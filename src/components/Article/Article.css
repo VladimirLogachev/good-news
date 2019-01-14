@@ -1,4 +1,27 @@
+.article + .article {
+  margin-top: 4em;
+}
+
 .article-img {
   max-width: 100%;
   border-radius: 5px;
+}
+
+.article-title {
+  font-weight: 400;
+  margin: 0.5em 0;
+  font-size: 24px;
+  color: #000;
+}
+
+.article-text {
+  font-size: 16px;
+  color: #34495e;
+}
+
+.article-meta {
+  font-weight: 300;
+  font-size: 14px;
+  margin-right: 1em;
+  color: rgb(121, 121, 121);
 }

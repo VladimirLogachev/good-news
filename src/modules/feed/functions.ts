@@ -9,7 +9,16 @@ import { ApiArticlesDataset, ArticleItem } from './types';
 /**
  * Validate Article
  */
-const isValidArticle = x => x && typeof x === 'object' && typeof x.url === 'string';
+const isValidArticle = x =>
+  x &&
+  typeof x === 'object' &&
+  typeof x.url === 'string' &&
+  typeof x.urlToImage === 'string' &&
+  typeof x.title === 'string' &&
+  typeof x.description === 'string' &&
+  typeof x.source === 'object' &&
+  typeof x.source.name === 'string' &&
+  typeof x.publishedAt === 'string';
 
 /**
  * Validate API dataset
