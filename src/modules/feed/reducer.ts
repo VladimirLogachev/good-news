@@ -1,6 +1,5 @@
 import { Dictionary, keys, omit, toDictionaryByProp } from '../../utils/functional';
 import { allTypes } from '../actions';
-import { ARTICLES_PER_PAGE } from './constants';
 import { getKeysSortedByTimestamp } from './functions';
 import { ArticleItem, ArticleKey } from './types';
 
@@ -30,13 +29,11 @@ const fetchMoreNews = (state: State) => ({
 });
 
 const saveNews = (state: State, { articles, articlesAvailable }) => {
-  const loadedPages = Math.floor(keys(state.articles).length / ARTICLES_PER_PAGE);
-  const totalPages = Math.ceil(articlesAvailable / ARTICLES_PER_PAGE);
-  const hasMore = loadedPages < totalPages;
   const newArticles: Dictionary<ArticleItem> = {
     ...state.articles,
     ...toDictionaryByProp('key')(articles)
   };
+  const hasMore = keys(newArticles).length < articlesAvailable;
   return {
     ...state,
     articles: newArticles,

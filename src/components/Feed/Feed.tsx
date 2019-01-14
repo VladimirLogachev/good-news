@@ -1,11 +1,11 @@
 import * as React from 'react';
+import * as InfiniteScroll from 'react-infinite-scroller';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { allActions } from '../../modules/actions';
 import { ReduxState } from '../../modules/reducers';
 import { Article } from '../Article/Article';
 import { ArticleLoader } from '../Article/ArticleLoader';
-import * as InfiniteScroll from 'react-infinite-scroller';
 import './Feed.css';
 
 type Props = {
@@ -34,7 +34,7 @@ class FeedComponent extends React.Component<Props> {
         <button onClick={fetchMoreNews}>Try again</button>
       </React.Fragment>
     );
-    const feedEnd = <h3>The End</h3>;
+    const feedEnd = <h3>That's all! Thank you for reading!</h3>;
     const articlesList = articlesByTimestamp
       .map(x => articles[x])
       .map(x => (
@@ -52,7 +52,7 @@ class FeedComponent extends React.Component<Props> {
           loadMore={fetchMoreNews}
           initialLoad={false}
           hasMore={!hasError && hasMore}
-          loader={hasError ? <React.Fragment /> : <ArticleLoader />}
+          loader={hasError ? <React.Fragment key="emptyFragment" /> : <ArticleLoader key="ArticleLoader" />}
         >
           {articlesList}
         </InfiniteScroll>

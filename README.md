@@ -2,7 +2,7 @@
 
 [See live demo](https://vladimirlogachev.github.io/good-news/)
 
-An infinite news feed, build with **TypeScript, React, Redux, Saga, Persist**
+An infinite news feed, build with **TypeScript, Runtypes, React, Redux, Saga, Persist**
 
 <img src="screenshot.png">
 
@@ -39,3 +39,4 @@ An infinite news feed, build with **TypeScript, React, Redux, Saga, Persist**
 ## Technical Decisions / Assumptions
 
 - During saving articles are duplicated (but not cloned - same objects...) from one Dictionary to another, so that user can view saved items after reloading, even if they were on 50-th page of API.
+- Null-able properties in Api response should be declared as null-able, but filtered out or reset after validation for the sake of consistency.
