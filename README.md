@@ -1,8 +1,8 @@
 # Good News
 
-An infinite news feed, build with **TypeScript, React, Redux, Saga, Persist**
+[See live demo](https://vladimirlogachev.github.io/good-news/)
 
-[See live demo](https://vladimirlogachev.github.io/good-news/).
+An infinite news feed, build with **TypeScript, React, Redux, Saga, Persist**
 
 <img src="screenshot.png">
 
