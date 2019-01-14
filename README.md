@@ -1,8 +1,10 @@
 # Good News
 
-An infinite news feed, build with **TypeScript, React, Redux, Saga, Axios**
+An infinite news feed, build with **TypeScript, React, Redux, Saga, Persist**
 
 [See live demo](https://vladimirlogachev.github.io/good-news/).
+
+<img src="screenshot.png">
 
 ## Functional requirements
 
