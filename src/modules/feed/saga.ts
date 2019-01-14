@@ -6,7 +6,7 @@ import { parseError, takeFirst } from '../../utils/saga-utils';
 import { allActions, allTypes } from '../actions';
 import { ReduxState } from '../reducers';
 import { ARTICLES_PER_PAGE } from './constants';
-import { isValidDataset, transformArticle } from './functions';
+import { parseDataset, transformArticle } from './functions';
 import { ApiArticlesDataset } from './types';
 
 function* fetchMoreNews() {
@@ -21,9 +21,9 @@ function* fetchMoreNews() {
           env.apiKey
         }`
       );
-      if (!isValidDataset(res.data)) throw new Error('Api responded with an invalid dataset');
-      const articlesAvailable = res.data.totalResults;
-      const items = res.data.articles.map(transformArticle);
+      const validDataset = parseDataset(res.data); // throws
+      const articlesAvailable = validDataset.totalResults;
+      const items = validDataset.articles.map(transformArticle);
       yield put(allActions.saveNews(items, articlesAvailable));
     }
   } catch (e) {

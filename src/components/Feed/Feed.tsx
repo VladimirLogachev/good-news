@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import { allActions } from '../../modules/actions';
 import { ReduxState } from '../../modules/reducers';
 import { Article } from '../Article/Article';
+import { ArticleLoader } from '../Article/ArticleLoader';
 import * as InfiniteScroll from 'react-infinite-scroller';
 import './Feed.css';
 
@@ -26,7 +27,13 @@ class FeedComponent extends React.Component<Props> {
       saveArticle,
       forgetArticle
     } = this.props;
-    const loader = <span>Loading good news...</span>;
+    const hasError = error.length !== 0;
+    const errorComponent = (
+      <React.Fragment>
+        <p>Sorry, {error}</p>
+        <button onClick={fetchMoreNews}>Try again</button>
+      </React.Fragment>
+    );
     const feedEnd = <h3>The End</h3>;
     const articlesList = articlesByTimestamp
       .map(x => articles[x])
@@ -42,14 +49,14 @@ class FeedComponent extends React.Component<Props> {
     return (
       <div>
         <InfiniteScroll
-          loadMore={() => fetchMoreNews()}
+          loadMore={fetchMoreNews}
           initialLoad={false}
-          hasMore={hasMore}
-          loader={loader}
+          hasMore={!hasError && hasMore}
+          loader={hasError ? <React.Fragment /> : <ArticleLoader />}
         >
           {articlesList}
         </InfiniteScroll>
-        {error.length !== 0 && `Sorry, ${error}`}
+        {hasError && errorComponent}
         {hasMore || feedEnd}
       </div>
     );

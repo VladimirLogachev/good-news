@@ -21,15 +21,28 @@ const isValidArticle = x =>
   typeof x.publishedAt === 'string';
 
 /**
- * Validate API dataset
+ * Validate API dataset (shallow)
  */
 export const isValidDataset = (data: ApiArticlesDataset) =>
   data &&
   typeof data === 'object' &&
   typeof data.totalResults === 'number' &&
   data.totalResults >= 0 &&
-  Array.isArray(data.articles) &&
-  data.articles.every(isValidArticle);
+  Array.isArray(data.articles);
+
+/**
+ * Parse/Filter API dataset. Throws an error!!! // TODO: refactor to Either monad
+ */
+export const parseDataset = (data: ApiArticlesDataset): ApiArticlesDataset => {
+  if (isValidDataset(data)) {
+    const newdata = { ...data, articles: data.articles.filter(isValidArticle) };
+    // TODO: log: filter(x => !isValidArticle(x))
+    if (newdata.articles.length === 0) throw new Error('Api responded with an invalid dataset');
+    return newdata;
+  } else {
+    throw new Error('Api responded with an invalid dataset');
+  }
+};
 
 /**
  * Convert API data to App's own format
