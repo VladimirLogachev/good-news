@@ -1,14 +1,19 @@
 import * as React from 'react';
-import { NavLink } from 'react-router-dom';
+import { RouteComponentProps, withRouter } from 'react-router';
+import { Link } from '../Link/Link';
 import './Menu.css';
 
-export const Menu = () => (
+type Props = {};
+
+const MenuComponent = ({ location }: RouteComponentProps<any> & Props) => (
   <div className="menu">
-    <NavLink className="link" activeClassName="active" to="/feed">
+    <Link disabled={location.pathname === '/feed'} to="/feed">
       Feed
-    </NavLink>
-    <NavLink className="link" activeClassName="active" to="/favorites">
+    </Link>
+    <Link disabled={location.pathname === '/favorites'} to="/favorites">
       Favorites
-    </NavLink>
+    </Link>
   </div>
 );
+
+export const Menu = withRouter(MenuComponent);

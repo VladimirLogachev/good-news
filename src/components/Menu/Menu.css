@@ -1,17 +1,4 @@
 .menu {
   padding: 0.5em 0;
-}
-
-.link {
-  padding: 0.5em 0;
-  color: rgb(29, 142, 194);
-  font-size: 18px;
-}
-
-.link + .link {
-  margin-left: 1em;
-}
-
-.active {
-  color: #888;
+  margin-bottom: 1em;
 }
