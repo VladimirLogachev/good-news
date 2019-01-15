@@ -2,7 +2,7 @@ import { applyMiddleware, createStore } from 'redux';
 import { createTransform, persistCombineReducers, PersistedState, persistStore } from 'redux-persist';
 import persistStorage from 'redux-persist/es/storage';
 import createSagaMiddleware from 'redux-saga';
-import { env } from '../environments/production';
+import { env } from '../environments/env';
 import { cleanupOnLoad, cleanupOnSave } from './feed/reducer';
 import { reducers } from './reducers';
 import { sagas } from './sagas';
@@ -18,7 +18,7 @@ export const configureStore = () => {
   );
 
   const persistConfig = {
-    key: `${env.storagePrefix}.root`,
+    key: `${env.STORAGE_PREFIX}.root`,
     storage: persistStorage,
     version: APP_VER,
     migrate: migration,

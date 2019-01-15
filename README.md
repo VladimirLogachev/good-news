@@ -2,9 +2,10 @@
 
 [See live demo](https://vladimirlogachev.github.io/good-news/)
 
-An infinite news feed, build with **TypeScript, Runtypes, React, Redux, Saga, Persist**
+An infinite news feed with declarative runtyme type checks.
+**TypeScript, Runtypes, React, Redux, Saga, Persist**.
 
-<img src="screenshot.png">
+<img src="documentation/screenshot.png">
 
 ## Functional requirements
 
@@ -32,11 +33,12 @@ An infinite news feed, build with **TypeScript, Runtypes, React, Redux, Saga, Pe
 - `npm run build`:
   - cleans `/build` directory;
   - builds for production into `/build` (ignored by Git, to be served from `static` path).
-- `npm run publish`:
+- `npm run ghpages`:
   - cleans `/docs` directory;
   - builds for production into `/docs` (used by GitHub Pages, has different path).
 
-## Technical Decisions / Assumptions
+## Technical Decisions and Assumptions
 
-- During saving articles are duplicated (but not cloned - same objects...) from one Dictionary to another, so that user can view saved items after reloading, even if they were on 50-th page of API.
-- Null-able properties in Api response should be declared as null-able, but filtered out or reset after validation for the sake of consistency.
+- During saving articles are duplicated (but not cloned - same objects...) from one Dictionary to another, so that user can view saved items after reloading, even if they were on 50-th page of API;
+- Null-able properties in Api response should be declared as null-able, but filtered out (or reset) after validation for the sake of state consistency;
+- All dependencies have exact version numbers and should be updated manually (to ever run it without crashes after 1 or more years (node `10.15.0`)).

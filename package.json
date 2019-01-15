@@ -4,9 +4,9 @@
   "description": "Good News",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --open --history-api-fallback",
-    "build": "webpack --config=webpack.build.config.js",
-    "publish": "webpack --config=webpack.publish.config.js"
+    "start": "webpack-dev-server --open --history-api-fallback --env.ENVIRONMENT=local",
+    "build": "webpack --config=webpack.build.config.js --env.ENVIRONMENT=production",
+    "ghpages": "webpack --config=webpack.build.config.js --env.ENVIRONMENT=ghpages"
   },
   "repository": {
     "type": "git",
@@ -17,6 +17,7 @@
   "dependencies": {
     "@types/axios": "0.14.0",
     "@types/luxon": "1.4.1",
+    "@types/node": "10.12.18",
     "@types/react": "16.7.18",
     "@types/react-dom": "16.0.11",
     "@types/react-infinite-scroller": "1.2.0",
@@ -28,6 +29,7 @@
     "axios": "0.18.0",
     "clean-webpack-plugin": "1.0.0",
     "css-loader": "2.1.0",
+    "dotenv-safe": "6.1.0",
     "html-webpack-plugin": "3.2.0",
     "luxon": "1.10.0",
     "normalize.css": "8.0.1",

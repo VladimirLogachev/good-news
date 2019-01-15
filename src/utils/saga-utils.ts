@@ -1,5 +1,5 @@
 import { call, fork, take } from 'redux-saga/effects';
-import { env } from '../environments/production';
+import { env } from '../environments/env';
 
 /**
  * Performs any other tasks only after existing one is finished
@@ -31,7 +31,7 @@ export const parseError = error => {
  */
 export const logger = (...args) => {
   // TODO: there could also be remote logging
-  if (env.allowConsoleOutput) {
+  if (env.ALLOW_CONSOLE_OUTPUT) {
     console.log(...args);
   }
 };

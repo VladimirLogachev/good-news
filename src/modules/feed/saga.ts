@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
 import { call, put, select } from 'redux-saga/effects';
-import { env } from '../../environments/production';
+import { env } from '../../environments/env';
 import { keys } from '../../utils/functional';
 import { logger, parseError, takeFirst } from '../../utils/saga-utils';
 import { allActions, allTypes } from '../actions';
@@ -16,9 +16,9 @@ function* fetchMoreNews() {
       const loadedPages = Math.ceil(keys(articles).length / ARTICLES_PER_PAGE);
       const targetPage = loadedPages + 1;
       logger('targetPage', targetPage);
-      const url = `${env.apiUrl}everything?sources=${env.sourceName}&language=en&page=${targetPage}&apiKey=${
-        env.apiKey
-      }`;
+      const url = `${env.API_URL}everything?sources=${
+        env.SOURCE_NAME
+      }&language=en&page=${targetPage}&apiKey=${env.API_KEY}`;
 
       const res: AxiosResponse<ApiArticlesDataset> = yield call(axios.get, url);
       const { articles: newArticles, totalResults: articlesAvailable } = apiArticlesDataset.check(res.data); // throws
@@ -26,7 +26,7 @@ function* fetchMoreNews() {
       yield put(allActions.saveNews(items, articlesAvailable));
     }
   } catch (e) {
-    // check if api responded with invalid data
+    // if api responded with an invalid data, tell about it in a human-readable way
     yield put(allActions.fetchFail(parseError(e)));
   }
 }

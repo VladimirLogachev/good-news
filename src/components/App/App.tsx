@@ -1,10 +1,10 @@
 import * as React from 'react';
-import { Route, Redirect, Switch } from 'react-router-dom';
+import { Redirect, Route, Switch } from 'react-router-dom';
+// import '../../../node_modules/normalize.css/normalize.css';
+import '../../utils/btn.css';
 import { Favorites } from '../Favorites/Favorites';
 import { Feed } from '../Feed/Feed';
 import { Menu } from '../Menu/Menu';
-// import '../../../node_modules/normalize.css/normalize.css';
-import '../../utils/btn.css';
 import './App.css';
 
 export const App = () => (
